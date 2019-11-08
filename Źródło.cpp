@@ -6,6 +6,7 @@ struct car
 	std::string marka;
 	int rok_produkcji;
 };
+int Retry(void);
 
 int main()
 {
@@ -21,13 +22,28 @@ int main()
 		std::getline(std::cin, katalog[i].marka);
 		std::cout << "Rok produkcji: ";
 		std::cin >> (katalog + i)->rok_produkcji;
+		while (!std::cin.good())
+			(katalog + i)->rok_produkcji = Retry();
 	}
 	for (int i = 0; i < ilosc; i++)
 	{
-		std::cout << "Auto #"<<i+1<<" "<< katalog[i].marka << "\trok produkcji " << (katalog+i)->rok_produkcji<< "\n";
+		std::cout << "Auto #" << i + 1 << " " << katalog[i].marka << "\trok produkcji " << (katalog + i)->rok_produkcji << "\n";
 	}
-	std::cin.get();
+	while (std::cin.get() != '\n')
+		continue;
 	std::cin.get();
 
 	return 0;
+}
+
+int Retry(void)
+{
+
+	int date;
+	std::cin.clear();
+	while (std::cin.get() != '\n')
+		continue;
+	std::cout << "zly format daty, wpisz jako liczba: ";
+	std::cin >> date;
+	return date;
 }
